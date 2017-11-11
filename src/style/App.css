@@ -1,0 +1,213 @@
+@import '~antd/dist/antd.min.css';
+@import '~react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+
+label {
+    font-size: 14px;
+}
+
+/* Override css of ant-design*/
+.ant-menu-inline > .ant-menu-item {
+    font-size: 17px;
+}
+
+.ant-form-item {
+    font-size: 14px;
+}
+
+.ant-select-dropdown {
+    font-size: 14px;
+}
+
+.ant-select {
+    font-size: 14px;
+}
+
+.ant-form-item-label {
+    padding-top: 4px;
+}
+
+.ant-modal-body {
+    font-size: 14px;
+}
+
+.ant-modal-title {
+    text-align: center;
+}
+
+.ant-table-small {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+}
+
+.ant-menu-item > a {
+    text-decoration: none !important;
+}
+
+.ant-radio-button-wrapper > span {
+    font-weight: normal;
+}
+
+.ant-btn-lg {
+    height: 37px;
+}
+
+.ant-badge {
+    padding-bottom: 5px;
+    margin-right: 2px;
+}
+
+.ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title {
+    padding: 0;
+}
+
+.react-bs-table-tool-bar {
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+.mainTable {
+    margin-top: 45px;
+}
+
+.customizeButton {
+    font-size: 14px;
+    height: 37px;
+    position: absolute;
+    right: 0;
+}
+
+.changeAllVersion {
+    font-size: 14px;
+    height: 37px;
+    position: absolute;
+    right: 140px;
+}
+
+.resetButton {
+    height: 26px;
+    position: absolute;
+    top: 53px;
+    left: 50%;
+    margin-left: -75px;
+}
+
+.react-bs-table {
+    margin: 0;
+}
+
+#leftMenu {
+    position: absolute;
+    top: 51px;
+    left: 0;
+    bottom: 0;
+    background: white;
+    width: 310px;
+    border-right: 1px solid #e9e9e9;
+}
+
+#rightWrap {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px 20px 0 20px;
+    position: absolute;
+    top: 51px;
+    left: 310px;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.right-box {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 20px 20px 0;
+    position: absolute;
+    top: 73px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+#rightWrap .ant-menu-submenu {
+    float: right;
+}
+
+.chart-box {
+    margin-top: 30px;
+}
+
+.ege {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.ege a {
+    color: #009688;
+    font-size: 16px;
+}
+
+.lastPic {
+    display: block;
+    margin: 16% auto 0;
+}
+
+.ani-box {
+    text-align: center;
+}
+
+.doclist {
+    line-height: 40px;
+}
+
+#header {
+    background-color: black;
+    height: 51px;
+    padding-left: 16px;
+    padding-top: 8px;
+}
+
+#userID {
+    float: right;
+    color: white;
+    font-size: 16px;
+    margin-top: 7px;
+    padding-right: 15px;
+}
+
+#jenkinsLogo {
+    height: 35px;
+}
+
+#jenkinsTitle {
+    height: 34px;
+}
+
+.pageTitle {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.uneditableColumn {
+    background-color: darkgrey;
+    color: white;
+}
+
+.checkErrorColumn {
+    color: red;
+}
+
+.checkPassColumn {
+    color: green;
+}
+
+.myHide {
+    display: none;
+}
+
+.JobListTitle {
+    margin-left: 15px;
+}
