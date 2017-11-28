@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 // import {Link} from 'react-router-dom'
 import axios from 'axios'
-import {LocaleProvider, Menu, Layout, Icon, Breadcrumb, Table, Input, Button, TreeSelect} from 'antd'
+import {LocaleProvider, Menu, Layout, Icon, Breadcrumb, Table, Input, Button, TreeSelect, Spin} from 'antd'
 import enUS from 'antd/lib/locale-provider/en_US';
 import * as Actions from '../actions'
 import '../style/App.css';
@@ -124,15 +124,17 @@ class App extends React.Component {
             data: [],
             searchText: '',
             filtered: false,
-            treeValue: []
+            treeValue: [],
+            loading:false
         };
     }
 
     componentWillMount() {
-        axios.get(`http://172.27.19.41:8081/api/v1/info`) //`http://api.shcloud.top:8080/university`)//http://api.shcloud.top:8080/api/v1/info/`+this.state.value)  //   `http://172.27.19.41:8081/api/v1/info`
+        this.setState({loading: true});
+        axios.get(`http://172.27.19.41:8081/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
             .then(res => {
                 console.log(res);
-                this.setState({data: res.data});
+                this.setState({data: res.data, loading: false});
                 searchData = res.data;
             });
     }
@@ -144,10 +146,11 @@ class App extends React.Component {
             encode += this.state.treeValue[i] + "_";
         }
 
+        this.setState({loading: true});
         axios.get(`http://172.27.19.41:8081/api/v1/info/`+encode.slice(0, -1))
             .then(res => {
                 console.log(res);
-                this.setState({data: res.data});
+                this.setState({data: res.data, loading: false});
                 searchData = res.data;
             });
 
@@ -198,7 +201,7 @@ class App extends React.Component {
             title: 'University',  //display on screen
             dataIndex: 'name', //used by the data: dataIndex: 'data_value',
             id: 'id',
-            width: 220,
+            width: 350,
             render: (title, record) => <a href={"/" + record.id}>{title}</a>,
             sorter: (a, b) => a.name.localeCompare(b.name),
             filterDropdown: (
@@ -246,6 +249,14 @@ class App extends React.Component {
                 width: 800,
             },
         };
+
+        let show = null;
+        if (!this.state.loading) {
+            show =  <div><h4>select crime factors: <TreeSelect {...tProps} /></h4><Table columns={columns} dataSource={this.state.data} onChange={onChange}/></div>;
+        } else {
+            show =  <div style={{paddingTop:50, textAlign: 'center'}}><Spin size="large" /></div>;
+        }
+
         return (
             <LocaleProvider locale={enUS}>
                 <div>
@@ -265,9 +276,8 @@ class App extends React.Component {
                                 </Breadcrumb>
                                 <div style={{padding: 24, background: '#fff', minHeight: 360}}>
                                     <h1 align="middle">University Overall Ranking</h1>
-                                    <h4>select crime factors: <TreeSelect {...tProps} /></h4>
-                                    {/*To-Do: Add the main content of this page*/
-                                        <Table columns={columns} dataSource={this.state.data} onChange={onChange}/>
+                                        {/*To-Do: Add the main content of this page*/
+                                        show
                                     }
                                 </div>
                             </Content>
@@ -277,6 +287,7 @@ class App extends React.Component {
                 </div>
             </LocaleProvider>
         )
+
     }
 }
 

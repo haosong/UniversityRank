@@ -40,7 +40,7 @@ class university extends React.Component {
     };
 
     getUniversityInfo = (uid) => {
-        axios.get(`http://api.shcloud.top:8080/university`)
+        axios.get(`http://api.shcloud.top:8080/ranking`)
             .then(res => {
                 console.log("hi");
                 console.log(res.data.name);
