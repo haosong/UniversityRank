@@ -32,22 +32,64 @@ class university extends React.Component {
     }
 
     componentWillMount() {
-        this.getUniversityInfo(this.state.id);
+        //this.getUniversityInfo(this.state.id);
+        this.getRankingInfo(this.state.id);
+        this.setState({name: "setnameuniversity"});
     }
 
     onCollapse = (collapsed) => {
         this.setState({collapsed});
     };
+    
+//     {
+//   "national_rank": 1,
+//   "citation": 100
+// }
 
-    getUniversityInfo = (uid) => {
-        axios.get(`http://api.shcloud.top:8080/ranking`)
+// name["national_rank"]
+
+    getRankingInfo = (uid) => {
+        axios.get(`http://api.shcloud.top:8080/ranking` /*+uid*/ )
             .then(res => {
-                console.log("hi");
-                console.log(res.data.name);
-                this.setState({name: res.data.name});
+                //alert(this.data.national_rank);
+                // console.log(res.data.national_rank);
+                this.setState({national_rank: res.data.national_rank});
+                // this.setState({quality_of_teaching: res.data.quality_of_teaching});                
+                // this.setState({alumni_employment: res.data.alumni_employment});
+                // this.setState({quality_of_faculty: res.data.quality_of_faculty});
+                // this.setState({publication: res.data.publication});
+                // this.setState({influence: res.data.influence});
+                this.setState({citation: res.data.citation});
+                // this.setState({patents: res.data.patents});
+                // this.setState({score: res.data.score});
             });
     };
 
+
+    // getUniversityInfo = (uid) => {
+    //     axios.get(`http://api.shcloud.top:8080/ranking` /*+uid*/ )
+    //         .then(res => {
+    //             //alert(this.data.national_rank);
+    //             // console.log(res.data.national_rank);
+    //             this.setState({name: res.data.name});
+    //             this.setState({type: res.data.type});
+    //             this.setState({country: res.data.country});
+    //             this.setState({income: res.data.income});
+    //             this.setState({number_students: res.data.number_students});
+    //             this.setState({studnet_stuff_ratio: res.data.studnet_stuff_ratio});
+    //             this.setState({male_female_ratio: res.data.male_female_ratio});
+    //             this.setState({international_students: res.data.international_students});
+    //             this.setState({city: res.data.city});
+    //             this.setState({state: res.data.state});
+    //             this.setState({latitude: res.data.latitude});
+    //             this.setState({longitude: res.data.longitude});
+                
+    //         });
+    // };
+    
+    
+    
+    
 
     onChange = (checkedList) => {
     this.setState({
@@ -66,6 +108,7 @@ class university extends React.Component {
 
 
     render() {
+        
         return (
             <LocaleProvider locale={enUS}>
                 <div>
@@ -88,25 +131,29 @@ class university extends React.Component {
                                     <Breadcrumb.Item>{this.state.name}</Breadcrumb.Item>
                                 </Breadcrumb>
                                 <div style={{padding: 24, background: '#fff', minHeight: 360}}>
-                                    <h1>This is {this.state.name}, UID: {this.state.id}</h1>
+                                    <h1>This is {this.state.name},citation {this.state.citation} UID: {this.state.id}</h1>
                                     <p>Take a look at getUniversityInfo() and componentWillMount(),
                                         you can see the name "Yale" is fetched from remote API</p>
                                     {/*To-Do: Add the main content of this page*/}
+                                
+                                    <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+                                        <Checkbox
+                                        indeterminate={this.state.indeterminate}
+                                        onChange={this.onCheckAllChange}
+                                        checked={this.state.checkAll}
+                                        >
+                                        Check all
+                                        </Checkbox>
+                                    </div>
+                                    <br />
+                                    <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
+                                
                                 </div>
                                 
                                 
                                 
-                                <div style={{ borderBottom: '1px solid #E9E9E9' }}>
-                                  <Checkbox
-                                    indeterminate={this.state.indeterminate}
-                                    onChange={this.onCheckAllChange}
-                                    checked={this.state.checkAll}
-                                  >
-                                    Check all
-                                  </Checkbox>
-                                </div>
-                                <br />
-                                <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
+                                    
+                                
                               
                             </Content>
                             <Footer style={{textAlign: 'center'}}>Database Project ©2017</Footer>
