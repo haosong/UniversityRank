@@ -12,6 +12,7 @@ class university extends React.Component {
         let universityID = props.match.params.id;
         this.state = {
             id: universityID,
+            data: [],
             collapsed: false
         };
     }
