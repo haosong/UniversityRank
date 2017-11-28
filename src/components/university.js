@@ -1,9 +1,18 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import {LocaleProvider, Menu, Layout, Icon, Breadcrumb} from 'antd'
+import {LocaleProvider, Menu, Layout, Icon, Breadcrumb, Checkbox} from 'antd'
 import enUS from 'antd/lib/locale-provider/en_US';
 const {Content, Footer, Sider} = Layout;
+
+// import { Checkbox } from 'antd';
+const CheckboxGroup = Checkbox.Group;
+
+const plainOptions = ['Ranking', 'Crime', 'Business'];
+const defaultCheckedList = ['Ranking'];
+
+
+
 
 class university extends React.Component {
 
@@ -12,8 +21,13 @@ class university extends React.Component {
         let universityID = props.match.params.id;
         this.state = {
             id: universityID,
-            data: [],
-            collapsed: false
+            
+            collapsed: false,
+            
+            
+            checkedList: defaultCheckedList,
+            indeterminate: true,
+            checkAll: false,
         };
     }
 
@@ -28,9 +42,28 @@ class university extends React.Component {
     getUniversityInfo = (uid) => {
         axios.get(`http://api.shcloud.top:8080/university`)
             .then(res => {
+                console.log("hi");
+                console.log(res.data.name);
                 this.setState({name: res.data.name});
             });
     };
+
+
+    onChange = (checkedList) => {
+    this.setState({
+      checkedList,
+      indeterminate: !!checkedList.length && (checkedList.length < plainOptions.length),
+      checkAll: checkedList.length === plainOptions.length,
+    });
+  };
+  onCheckAllChange = (e) => {
+    this.setState({
+      checkedList: e.target.checked ? plainOptions : [],
+      indeterminate: false,
+      checkAll: e.target.checked,
+    });
+  };
+
 
     render() {
         return (
@@ -60,14 +93,29 @@ class university extends React.Component {
                                         you can see the name "Yale" is fetched from remote API</p>
                                     {/*To-Do: Add the main content of this page*/}
                                 </div>
+                                
+                                
+                                
+                                <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+                                  <Checkbox
+                                    indeterminate={this.state.indeterminate}
+                                    onChange={this.onCheckAllChange}
+                                    checked={this.state.checkAll}
+                                  >
+                                    Check all
+                                  </Checkbox>
+                                </div>
+                                <br />
+                                <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
+                              
                             </Content>
                             <Footer style={{textAlign: 'center'}}>Database Project ©2017</Footer>
                         </Layout>
                     </Layout>
                 </div>
             </LocaleProvider>
-        )
+        );
     }
 }
-
+// ReactDOM.render(<App />, mountNode);
 export default university

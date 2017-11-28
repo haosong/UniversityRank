@@ -129,7 +129,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        axios.get(`http://172.27.19.41:8081/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
+        axios.get(`http://172.27.19.41:8081/api/v1/info`) //`http://api.shcloud.top:8080/university`)//http://api.shcloud.top:8080/api/v1/info/`+this.state.value)  //   `http://172.27.19.41:8081/api/v1/info`
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data});
