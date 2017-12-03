@@ -237,12 +237,18 @@ class App extends React.Component {
         }, {
             title: 'Rank',
             dataIndex: 'rank',
+            render: (record) => (record == 1500 || record == 900 || record == 700 || record == 550) ? "~"+record : record,
             sorter: (a, b) => a.rank - b.rank,
         }, {
             title: 'Total',
             dataIndex: 'total',
             sorter: (a, b) => a.total - b.total,
         }];
+        const pagination = {
+            pageSize:12,
+            showQuickJumper:true,
+            //showSizeChanger:true,
+        };
         const tProps = {
             treeData,
             value: this.state.treeValue,
@@ -257,7 +263,7 @@ class App extends React.Component {
 
         let show = null;
         if (!this.state.loading) {
-            show =  <div><h4>select crime factors: <TreeSelect {...tProps} /></h4><Table columns={columns} dataSource={this.state.data} onChange={onChange}/></div>;
+            show =  <div><h4>select crime factors: <TreeSelect {...tProps} /></h4><Table columns={columns} dataSource={this.state.data} pagination={pagination} onChange={onChange}/></div>;
         } else {
             show =  <div style={{paddingTop:50, textAlign: 'center'}}><Spin size="large" /></div>;
         }
@@ -286,7 +292,7 @@ class App extends React.Component {
                                     }
                                 </div>
                             </Content>
-                            <Footer style={{textAlign: 'center'}}>Database Project Â©2017</Footer>
+                            <Footer style={{textAlign: 'center'}}>Database Project ©2017</Footer>
                         </Layout>
                     </Layout>
                 </div>
