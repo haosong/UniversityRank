@@ -32,9 +32,9 @@ class university extends React.Component {
     }
 
     componentWillMount() {
-        //this.getUniversityInfo(this.state.id);
+        this.getUniversityInfo(this.state.id);
         this.getRankingInfo(this.state.id);
-        this.setState({name: "setnameuniversity"});
+        //this.setState({name: "setnameuniversity"});
     }
 
     onCollapse = (collapsed) => {
@@ -48,44 +48,51 @@ class university extends React.Component {
 
 // name["national_rank"]
 
+
+
     getRankingInfo = (uid) => {
-        axios.get(`http://api.shcloud.top:8080/ranking` /*+uid*/ )
+        axios.get(`http://172.26.75.27:8081/api/v1/ranking/` +uid )
             .then(res => {
                 //alert(this.data.national_rank);
                 // console.log(res.data.national_rank);
-                this.setState({national_rank: res.data.national_rank});
-                // this.setState({quality_of_teaching: res.data.quality_of_teaching});                
-                // this.setState({alumni_employment: res.data.alumni_employment});
-                // this.setState({quality_of_faculty: res.data.quality_of_faculty});
-                // this.setState({publication: res.data.publication});
-                // this.setState({influence: res.data.influence});
-                this.setState({citation: res.data.citation});
-                // this.setState({patents: res.data.patents});
+                this.setState({overallScore: res.data.overallScore});
+                this.setState({resourceScore: res.data.resourceScore});                
+                this.setState({engagementScore: res.data.engagementScore});
+                this.setState({outcomesScore: res.data.outcomesScore});
+                this.setState({environmentScore: res.data.environmentScore});
+                this.setState({tuitionFees: res.data.tuitionFees});
+                this.setState({roomAndBoard: res.data.roomAndBoard});
+                this.setState({salaryTenYears: res.data.salaryTenYears});
                 // this.setState({score: res.data.score});
             });
     };
+    
+    
 
+    getUniversityInfo = (uid) => {
+        axios.get(`http://172.26.75.27:8081/api/v1/university/`+uid)
+            .then(res => {
+                //alert(this.data.national_rank);
+                // console.log(res.data.national_rank);
+                this.setState({name: res.data.name});
+                this.setState({address: res.data.address});
+                this.setState({city: res.data.city});
+                this.setState({zip: res.data.zip});
 
-    // getUniversityInfo = (uid) => {
-    //     axios.get(`http://api.shcloud.top:8080/ranking` /*+uid*/ )
-    //         .then(res => {
-    //             //alert(this.data.national_rank);
-    //             // console.log(res.data.national_rank);
-    //             this.setState({name: res.data.name});
-    //             this.setState({type: res.data.type});
-    //             this.setState({country: res.data.country});
-    //             this.setState({income: res.data.income});
-    //             this.setState({number_students: res.data.number_students});
-    //             this.setState({studnet_stuff_ratio: res.data.studnet_stuff_ratio});
-    //             this.setState({male_female_ratio: res.data.male_female_ratio});
-    //             this.setState({international_students: res.data.international_students});
-    //             this.setState({city: res.data.city});
-    //             this.setState({state: res.data.state});
-    //             this.setState({latitude: res.data.latitude});
-    //             this.setState({longitude: res.data.longitude});
+                this.setState({men_total: res.data.men_total});
+                this.setState({women_total: res.data.women_total});
+                this.setState({total: res.data.total});
+                this.setState({men_ratio: res.data.men_ratio});
+                this.setState({women_ratio: res.data.women_ratio});
+
+                // this.setState({male_female_ratio: res.data.male_female_ratio});
+                // this.setState({international_students: res.data.international_students});
+                // this.setState({state: res.data.state});
+                // this.setState({latitude: res.data.latitude});
+                // this.setState({longitude: res.data.longitude});
                 
-    //         });
-    // };
+            });
+    };
     
     
     
