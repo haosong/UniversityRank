@@ -124,7 +124,7 @@ class App extends React.Component {
             searchText: '',
             filtered: false,
             treeValue: [],
-            loading:false
+            loading:false,
         };
     }
 
@@ -234,6 +234,7 @@ class App extends React.Component {
             title: 'Food',
             dataIndex: 'food',
             sorter: (a, b) => a.food - b.food,
+            render: (record) => (record == 0) ? "Unavailable" : record,
         }, {
             title: 'Rank',
             dataIndex: 'rank',
