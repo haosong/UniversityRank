@@ -23,9 +23,6 @@ public class UniversityController {
     private static final Logger logger = LoggerFactory.getLogger(UniversityController.class);
 
     @Autowired
-    private YelpBusinessRepository yelpBusinessRepository;
-
-    @Autowired
     private UniversityYelpRepository universityYelpRepository;
 
     @Autowired

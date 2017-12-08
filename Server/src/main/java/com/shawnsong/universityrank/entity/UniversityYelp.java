@@ -31,6 +31,10 @@ public class UniversityYelp {
         return name;
     }
 
+    public String getUniversityName() {
+        return name.getName();
+    }
+
     public void setName(University name) {
         this.name = name;
     }

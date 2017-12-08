@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,6 +34,12 @@ public class UniversityService {
     @Autowired
     private FireStatisticRepository fireStatisticRepository;
 
+    @Autowired
+    private UniversityYelpRepository universityYelpRepository;
+
+    @Autowired
+    private YelpBusinessRepository yelpBusinessRepository;
+
     public University findUniversityByGeohash(String geohash) {
         List<University> l = universityRepository.findByGeohash(geohash);
         return l.size() == 0 ? null : l.get(0);
@@ -46,6 +53,7 @@ public class UniversityService {
         Map<String, List<HateCrimes>> hateMap = hateCrimesRepository.findAll().stream().collect(Collectors.groupingBy(HateCrimes::getUniversityName));
         Map<String, List<VawaOffenses>> vawaMap = vawaOffensesRepository.findAll().stream().collect(Collectors.groupingBy(VawaOffenses::getUniversityName));
         Map<String, List<FireStatistic>> fireMap = fireStatisticRepository.findAll().stream().collect(Collectors.groupingBy(FireStatistic::getUniversityName));
+        Map<String, List<UniversityYelp>> yelpMap = universityYelpRepository.findAll().stream().collect(Collectors.groupingBy(UniversityYelp::getUniversityName));
         for (University u : l) {
             UniversityBrief ui = new UniversityBrief();
             Float arrestSum = 0f, criminalSum = 0f, hateSum = 0f, vawaSum = 0f, fireSum = 0f;
@@ -88,12 +96,26 @@ public class UniversityService {
             else if (rankStr.contains("-8")) rank = 700;
             else if (rankStr.contains("-6")) rank = 550;
             else rank = Integer.parseInt(rankStr);
-            ui.setFood(100f);
-            // ui.setRank(u.getRanking());
+            ui.setFood(0f);
+            Float foodScore = 0f;
+            if (yelpMap.containsKey(u.getName())) {
+                List<UniversityYelp> universityYelpList = yelpMap.get(u.getName());
+                ui.setFood((float) universityYelpList.size());
+                if (ui.getFood() > 150) {
+                    List<String> ids = universityYelpList.stream().map(o -> o.getId().getId()).collect(Collectors.toList());
+                    List<YelpBusiness> foodList = yelpBusinessRepository.findByIdIn(ids);
+                    Float totalStart = 0f;
+                    for (YelpBusiness y : foodList)
+                        totalStart += y.getStars();
+                    foodScore = totalStart / 100;
+                }
+            }
+            // ui.setRank(u.getRanking()); // only academic ranking
             ui.setRank(rank + "");
-            ui.setTotal(totalCrime * 0.1f + rank * 3);
+            ui.setTotal(totalCrime * 0.1f + rank * 3 - foodScore);
             res.add(ui);
         }
+        res.sort(Comparator.comparingDouble(o -> (double) o.getTotal()));
         return res;
     }
 }
