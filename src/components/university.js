@@ -8,8 +8,8 @@ const {Content, Footer, Sider} = Layout;
 
 // import { Checkbox } from 'antd';
 const CheckboxGroup = Checkbox.Group;
-const plainOptions = ['Ranking', 'Crime', 'Business'];
-const defaultCheckedList = ['Ranking'];
+const plainOptions = ['Ranking', 'Safety', 'Convenience'];
+const defaultCheckedList = ['Ranking','Safety', 'Convenience'];
 
 //Collapse
 const Panel = Collapse.Panel;
@@ -60,11 +60,11 @@ class university extends React.Component {
             id: universityID,
             
             collapsed: false,
-            
-            tableshow: [true, true, true],
-            tabledata: [[],[],[]],
             data: [],
             rankingdata: [],
+            Crime2015: [],
+            Crime2014: [],
+            Crime2013: [],
             checkedList: defaultCheckedList,
             indeterminate: true,
             checkAll: false,
@@ -76,6 +76,7 @@ class university extends React.Component {
         this.getUniversityInfo(this.state.id);
         this.getRankingInfo(this.state.id);
         this.getFoodInfo(this.state.id);
+        this.getCrimeInfo(this.state.id);
         // this.setState({name: "Yale University"});
         //this.setbasic_info();
     }
@@ -84,39 +85,57 @@ class university extends React.Component {
         this.setState({collapsed});
     };
     
-//     {
-//   "national_rank": 1,
-//   "citation": 100
-// }
-
-// name["national_rank"]
 
 
+        getCrimeInfo = (uid) => {
+        axios.get(`http://api.shcloud.top:8080/api/v1/crime/`+uid)
+            .then(res => {
+                // alert(res.data["2015"]["crime"][0]["type"]);
+                // var a = res.data[2015]["crime"];
+                // console.log(a);
+                var tmp = this.state.Crime2015;
+                tmp["crime"] = res.data["2015"]["crime"];
+                tmp["hate"] = res.data["2015"]["hate"];
+                tmp["arrests"] = res.data["2015"]["arrests"];
+                tmp["vawa"] = res.data["2015"]["vawa"];
+                tmp["fire"] = res.data["2015"]["fire"];
+                this.setState({Crime2015 : tmp});
+                
+                // tmp = this.state.Crime2014;
+                // alert(res.data[2014]["vawa"][0]["type"]);
+                tmp["crime"] = res.data["2014"]["crime"];
+                tmp["hate"] = res.data["2014"]["hate"];
+                tmp["arrests"] = res.data["2014"]["arrests"];
+                tmp["vawa"] = res.data["2014"]["vawa"];
+                tmp["fire"] = res.data["2014"]["fire"];
+                this.setState({Crime2014 : tmp});
+                alert(tmp["vawa"][0]["type"]);
+                
+                // tmp = this.state.Crime2013;
+                tmp["crime"] = res.data["2013"]["crime"];
+                tmp["hate"] = res.data["2013"]["hate"];
+                tmp["arrests"] = res.data["2013"]["arrests"];
+                tmp["vawa"] = res.data["2013"]["vawa"];
+                tmp["fire"] = res.data["2013"]["fire"];
+                this.setState({Crime2013 : tmp});
+                
+                
+                
+            });
+        };
 
         getFoodInfo = (uid) => {
         axios.get(`http://api.shcloud.top:8080/api/v1/food/`+uid)
             .then(res => {
-                const tabledata = this.state.tabledata;
-                tabledata[1] = res.data;
-                this.setState({tabledata,});
+                this.setState({fooddata : res.data});
             });
-    };
+        };
 
         getUniversityInfo = (uid) => {
         axios.get(`http://api.shcloud.top:8080/api/v1/university/`+uid)
             .then(res => {
                 // alert(res.data.men_total);
-                // console.log(res.data.national_rank);
                 
-                // this.setState({address: res.data.address});
-                // this.setState({city: res.data.city});
-                // this.setState({zip: res.data.zip});
-
-                // this.setState({men_total: res.data.men_total});
-                // this.setState({women_total: res.data.women_total});
-                // this.setState({total: res.data.total});
-                // this.setState({men_ratio: res.data.men_ratio});
-                // this.setState({women_ratio: res.data.women_ratio});
                 
                 this.setState({name: res.data.name});
                 var addressline = "";
@@ -160,85 +179,45 @@ class university extends React.Component {
                 infodata.push(womenratioline);
                 this.setState({data: infodata});
                 
-                // this.state.tabledata[0] = infodata;
-                // this.forceUpdate();
-                
 
-                // this.setState({male_female_ratio: res.data.male_female_ratio});
-                // this.setState({international_students: res.data.international_students});
-                // this.setState({state: res.data.state});
-                // this.setState({latitude: res.data.latitude});
-                // this.setState({longitude: res.data.longitude});
                 
             });
-    };
+        };
 
 
 
-    getRankingInfo = (uid) => {
-        axios.get(`http://api.shcloud.top:8080/api/v1/ranking/` +uid )
-            .then(res => {
-                //alert(this.data.national_rank);
-                // console.log(res.data.national_rank);
-                
-                this.setState({rankingdata : [{
-                  overallScore: "Not Avaliable",
-                  resourceScore: "Not Avaliable",
-                  engagementScore: "Not Avaliable",
-                  outcomesScore: "Not Avaliable",
-                  environmentScore: "Not Avaliable",
-                  tuitionFees: "Not Avaliable",
-                  roomAndBoard: "Not Avaliable",
-                  salaryTenYears: "Not Avaliable",
-                }]});
-                this.state.tabledata[1] = [{
-                  overallScore: "Not Avaliable",
-                  resourceScore: "Not Avaliable",
-                  engagementScore: "Not Avaliable",
-                  outcomesScore: "Not Avaliable",
-                  environmentScore: "Not Avaliable",
-                  tuitionFees: "Not Avaliable",
-                  roomAndBoard: "Not Avaliable",
-                  salaryTenYears: "Not Avaliable",
-                }];
-                if (res.data.overallScore) {
-                this.setState({rankingdata : [{
-                  overallScore: res.data.overallScore,
-                  resourceScore: res.data.resourceScore,
-                  engagementScore: res.data.engagementScore,
-                  outcomesScore: res.data.outcomesScore,
-                  environmentScore: res.data.environmentScore,
-                  tuitionFees: res.data.tuitionFees,
-                  roomAndBoard: res.data.roomAndBoard,
-                  salaryTenYears: res.data.salaryTenYears,
-                }]});
-                
-                this.state.tabledata[0] = [{
-                  overallScore: res.data.overallScore,
-                  resourceScore: res.data.resourceScore,
-                  engagementScore: res.data.engagementScore,
-                  outcomesScore: res.data.outcomesScore,
-                  environmentScore: res.data.environmentScore,
-                  tuitionFees: res.data.tuitionFees,
-                  roomAndBoard: res.data.roomAndBoard,
-                  salaryTenYears: res.data.salaryTenYears,
-                }];
-                
-                }
-                this.forceUpdate();
-                
-                
-                // this.setState({overallScore: res.data.overallScore});
-                // this.setState({resourceScore: res.data.resourceScore});                
-                // this.setState({engagementScore: res.data.engagementScore});
-                // this.setState({outcomesScore: res.data.outcomesScore});
-                // this.setState({environmentScore: res.data.environmentScore});
-                // this.setState({tuitionFees: res.data.tuitionFees});
-                // this.setState({roomAndBoard: res.data.roomAndBoard});
-                // this.setState({salaryTenYears: res.data.salaryTenYears});
-                // this.setState({score: res.data.score});
-            });
-    };
+        getRankingInfo = (uid) => {
+            axios.get(`http://api.shcloud.top:8080/api/v1/ranking/` +uid )
+                .then(res => {
+                    //alert(this.data.national_rank);
+                    // console.log(res.data.national_rank);
+                    
+                    this.setState({rankingdata : [{
+                      overallScore: "Not Avaliable",
+                      resourceScore: "Not Avaliable",
+                      engagementScore: "Not Avaliable",
+                      outcomesScore: "Not Avaliable",
+                      environmentScore: "Not Avaliable",
+                      tuitionFees: "Not Avaliable",
+                      roomAndBoard: "Not Avaliable",
+                      salaryTenYears: "Not Avaliable",
+                    }]}); 
+                    if (res.data.overallScore) {
+                    this.setState({rankingdata : [{
+                      overallScore: res.data.overallScore,
+                      resourceScore: res.data.resourceScore,
+                      engagementScore: res.data.engagementScore,
+                      outcomesScore: res.data.outcomesScore,
+                      environmentScore: res.data.environmentScore,
+                      tuitionFees: res.data.tuitionFees,
+                      roomAndBoard: res.data.roomAndBoard,
+                      salaryTenYears: res.data.salaryTenYears,
+                    }]}); 
+                    }
+                    
+                    
+                });
+        };
     
     
 
@@ -254,18 +233,12 @@ class university extends React.Component {
       indeterminate: !!checkedList.length && (checkedList.length < plainOptions.length),
       checkAll: checkedList.length === plainOptions.length,
     });
-    // var boolp [];
     
-    for (var i = 0, j = 0; i < plainOptions.length; i++){
-        if(checkedList.indexOf(plainOptions[i]) != -1) {
-            // boolp.push(true);
-            // this.setState({foodshow : false});
-            // this.setState({fooddata: [{"name":"","address":"","city":"","state":"","postal_code":""}]});
-        }
-        else {
-            this.state.tableshow[i] = false;
-            this.state.tabledata[i] = [{}];
-            this.forceUpdate();
+    
+    for (var i = 0; i < checkedList.length; i++){
+        if(checkedList[i] === 'Ranking') {
+            this.setState({foodshow : false});
+            this.setState({fooddata: [{"name":"","address":"","city":"","state":"","postal_code":""}]});
         }
     }
         
@@ -319,9 +292,6 @@ class university extends React.Component {
                                       <br />
                                       <br />
                                       
-                                    {/*<p>Take a look at getUniversityInfo() and componentWillMount(),
-                                        you can see the name "Yale" is fetched from remote API</p>*/}
-                                    {/*To-Do: Add the main content of this page*/}
                                 
                                     <div style={{ borderBottom: '1px solid #E9E9E9' }}>
                                         <Checkbox
@@ -336,14 +306,72 @@ class university extends React.Component {
                                     <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
                                     <br />
                                     <br />
-                                    <Table pagination={false} columns={rankingcolumns} dataSource={this.state.tabledata[0]} />
+                                    <Table pagination={false} columns={rankingcolumns} dataSource={this.state.rankingdata} />
                                     <br />
                                     <br />
-                                    <Table pagination={this.state.tableshow[1]} showHeader={this.state.tableshow[1]} columns={foodcolumns} dataSource={this.state.tabledata[1]} />
+                                    <Table pagination={this.state.foodshow} showHeader={this.state.foodshow} columns={foodcolumns} dataSource={this.state.fooddata} />
                                     <br />
                                     <br />
-                                    <h4>2015</h4>
-                                    <Table columns={foodcolumns} dataSource={this.state.fooddata} />
+                                    <h4>2015 Crime</h4>
+                                    <Table pagination={false} columns={crimecolumns} dataSource={this.state.Crime2015["crime"]} />
+                                     <br />
+                                    <br />
+                                    <h4>2015 Hate</h4>
+                                    <Table pagination={false} columns={hatecolumns} dataSource={this.state.Crime2015["hate"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2015 Arrests</h4>
+                                    <Table pagination={false}  columns={arrestscolumns} dataSource={this.state.Crime2015["arrests"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2015 Arrests</h4>
+                                    <Table pagination={false}  columns={vawacolumns} dataSource={this.state.Crime2015["vawa"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2015 Fire</h4>
+                                    <Table pagination={false}  columns={firecolumns} dataSource={this.state.Crime2015["fire"]} />
+                                    
+                                    <br />
+                                    <br />
+                                    <h4>2014 Crime</h4>
+                                    <Table pagination={false} columns={crimecolumns} dataSource={this.state.Crime2014["crime"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2014 Hate</h4>
+                                    <Table pagination={false} columns={hatecolumns} dataSource={this.state.Crime2014["hate"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2014 Arrests</h4>
+                                    <Table pagination={false}  columns={arrestscolumns} dataSource={this.state.Crime2014["arrests"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2014 Vawa</h4>
+                                    <Table pagination={false}  columns={vawacolumns} dataSource={this.state.Crime2014["vawa"]} />
+                                     <br />
+                                    <br />
+                                    <h4>2014 Fire</h4>
+                                    <Table pagination={false}  columns={firecolumns} dataSource={this.state.Crime2014["fire"]} />
+                                    
+                                    <br />
+                                    <br />
+                                    <h4>2013 Crime</h4>
+                                    <Table pagination={false} columns={crimecolumns} dataSource={this.state.Crime2013["crime"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2013 Hate</h4>
+                                    <Table pagination={false} columns={hatecolumns} dataSource={this.state.Crime2013["hate"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2013 Arrests</h4>
+                                    <Table pagination={false}  columns={arrestscolumns} dataSource={this.state.Crime2013["arrests"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2013 Vawa</h4>
+                                    <Table pagination={false}  columns={vawacolumns} dataSource={this.state.Crime2013["vawa"]} />
+                                    <br />
+                                    <br />
+                                    <h4>2013 Fire</h4>
+                                    <Table pagination={false}  columns={firecolumns} dataSource={this.state.Crime2013["fire"]} />
                                 </div>
                                 
                                 
@@ -365,11 +393,148 @@ class university extends React.Component {
 
 
 
+const firecolumns = [{
+  title: 'facility',
+  dataIndex: 'facility',
+  key: 'facility',
+}, {
+  title: 'fires',
+  dataIndex: 'fires',
+  key: 'fires',
+}, {
+  title: 'injuries',
+  dataIndex: 'injuries',
+  key: 'injuries',
+}, {
+  title: 'deaths',
+  dataIndex: 'deaths',
+  key: 'deaths',
+}, {
+  title: 'cause',
+  dataIndex: 'cause',
+  key: 'cause',
+}, {
+  title: 'category',
+  dataIndex: 'category',
+  key: 'category',
+}, {
+  title: 'damage',
+  dataIndex: 'damage',
+  key: 'damage',
+}];
+
+const crimecolumns = [{
+  title: 'Type',
+  dataIndex: 'type',
+  key: 'type',
+}, {
+  title: 'Murder Manslaughter',
+  dataIndex: 'murder_manslaughter',
+  key: 'murder_manslaughter',
+}, {
+  title: 'negligent_manslaughter',
+  dataIndex: 'negligent_manslaughter',
+  key: 'negligent_manslaughter',
+}, {
+  title: 'arson',
+  dataIndex: 'arson',
+  key: 'arson',
+}, {
+  title: 'motor_vehicle_theft',
+  dataIndex: 'motor_vehicle_theft',
+  key: 'motor_vehicle_theft',
+}, {
+  title: 'burglary',
+  dataIndex: 'burglary',
+  key: 'burglary',
+}, {
+  title: 'aggravated_assault',
+  dataIndex: 'aggravated_assault',
+  key: 'aggravated_assault',
+}, {
+  title: 'robbery',
+  dataIndex: 'robbery',
+  key: 'robbery',
+}];
+
+const vawacolumns = [{
+  title: 'Type',
+  dataIndex: 'type',
+  key: 'type',
+}, {
+  title: 'domestic_violence',
+  dataIndex: 'domestic_violence',
+  key: 'domestic_violence',
+}, {
+  title: 'dating_violence',
+  dataIndex: 'dating_violence',
+  key: 'dating_violence',
+}, {
+  title: 'staking',
+  dataIndex: 'staking',
+  key: 'staking',
+}];
+
+
+
+const arrestscolumns = [{
+  title: 'Type',
+  dataIndex: 'type',
+  key: 'type',
+}, {
+  title: 'weapon_carrying_possessing',
+  dataIndex: 'weapon_carrying_possessing',
+  key: 'weapon_carrying_possessing',
+}, {
+  title: 'drug_abuse_violation',
+  dataIndex: 'drug_abuse_violation',
+  key: 'drug_abuse_violation',
+}, {
+  title: 'liquor_law_violation',
+  dataIndex: 'liquor_law_violation',
+  key: 'liquor_law_violation',
+}];
+
+const hatecolumns = [{
+  title: 'Type',
+  dataIndex: 'type',
+  key: 'type',
+}, {
+  title: 'Murder Manslaughter',
+  dataIndex: 'murder_manslaughter',
+  key: 'murder_manslaughter',
+}, {
+  title: 'robbery',
+  dataIndex: 'robbery',
+  key: 'robbery',
+}, {
+  title: 'aggravated_assault',
+  dataIndex: 'aggravated_assault',
+  key: 'aggravated_assault',
+}, {
+  title: 'burglary',
+  dataIndex: 'burglary',
+  key: 'burglary',
+}, {
+  title: 'motor_vehicle_theft',
+  dataIndex: 'motor_vehicle_theft',
+  key: 'motor_vehicle_theft',
+},  {
+  title: 'arson',
+  dataIndex: 'arson',
+  key: 'arson',
+},  {
+  title: 'simple_assault',
+  dataIndex: 'simple_assault',
+  key: 'simple_assault',
+} ];
+
+
+
 const rankingcolumns = [{
   title: 'Overall Score',
   dataIndex: 'overallScore',
   key: 'overallScore',
-//   render: text => <a href="#">{text}</a>,
 }, {
   title: 'Resource Score',
   dataIndex: 'resourceScore',
@@ -404,13 +569,8 @@ const foodcolumns = [{
   title: 'Service and Merchant',
   dataIndex: 'name',
   key: 'name',
-//   render: text => <a href="#">{text}</a>,
+
 }, 
-// {
-//   title: 'Neighborhood',
-//   dataIndex: 'neighborhood',
-//   key: 'neighborhood',
-// }, 
 {
   title: 'Address',
   dataIndex: 'address',
