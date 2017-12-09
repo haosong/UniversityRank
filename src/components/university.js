@@ -19,37 +19,6 @@ function callback(key) {
 }
 
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
-
-var data1 = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
-
-
-// const rankingdata = [{
-//   key: '1',
-//   name: 'John Brown',
-//   age: 32,
-//   address: 'New York No. 1 Lake Park',
-// }];
-
-
-
-
-
-
-
-
-
 
 class university extends React.Component {
 
@@ -292,7 +261,7 @@ class university extends React.Component {
                                       <br />
                                       <br />
                                       
-                                
+                                    {/*
                                     <div style={{ borderBottom: '1px solid #E9E9E9' }}>
                                         <Checkbox
                                         indeterminate={this.state.indeterminate}
@@ -303,7 +272,7 @@ class university extends React.Component {
                                         </Checkbox>
                                     </div>
                                     <br />
-                                    <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
+                                    <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />*/}
                                     <br />
                                     <br />
                                     <Table pagination={false} columns={rankingcolumns} dataSource={this.state.rankingdata} />

@@ -11,102 +11,101 @@ import '../style/App.css';
 const {Content, Footer, Sider} = Layout;
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
-/*
-var f = [];
-var s = 'A', e = 'Z';
-for(var idx = s.charCodeAt(0), end = e.charCodeAt(0); idx <= end; ++idx){
-    let obj = {};
-    obj.text = String.fromCharCode(idx);
-    obj.value = String.fromCharCode(idx);
-    f.push(obj);
-}
-<h3><a href={"/1"}>Go to the page of Yale University: localhost:3000/1</a></h3>
-
-*/
-
 //a local copy of the data must be stored so that after searching the data can be recovered
 var searchData = [];
 var encode;
 
 const treeData = [{
     label: 'Criminal Offenses',
-    value: '0-0',
-    key: '0-0',
+    value: '0',
+    key: '0',
     children: [{
         label: 'Manslaughter',
-        value: '0-0-0',
-        key: '0-0-0',
-    },{
-        label: 'Rape',
-        value: '0-0-1',
-        key: '0-0-1',
+        value: '0-0',
+        key: '0-0',
     },{
         label: 'Robbery',
-        value: '0-0-2',
-        key: '0-0-2',
+        value: '0-1',
+        key: '0-1',
+    },{
+        label: 'Vehicle Theft',
+        value: '0-2',
+        key: '0-2',
     },{
         label: 'Burglary',
-        value: '0-0-3',
-        key: '0-0-3',
+        value: '0-3',
+        key: '0-3',
+    },{
+        label: 'Arson',
+        value: '0-4',
+        key: '0-4',
+    },{
+        label: 'Assault',
+        value: '0-5',
+        key: '0-5',
     }],
 }, {
     label: 'Hate Crimes',
-    value: '0-1',
-    key: '0-1',
+    value: '1',
+    key: '1',
     children: [{
         label: 'Manslaughter',
-        value: '0-1-0',
-        key: '0-1-0',
-    }, {
-        label: 'Rape',
-        value: '0-1-1',
-        key: '0-1-1',
-    }, {
-        label: 'Assault',
-        value: '0-1-2',
-        key: '0-1-2',
+        value: '1-0',
+        key: '1-0',
     }, {
         label: 'Robbery',
-        value: '0-1-3',
-        key: '0-1-3',
+        value: '1-1',
+        key: '1-1',
+    }, {
+        label: 'Vehicle Theft',
+        value: '1-2',
+        key: '1-2',
     }, {
         label: 'Burglary',
-        value: '0-1-4',
-        key: '0-1-4',
+        value: '1-3',
+        key: '1-3',
+    }, {
+        label: 'Arson',
+        value: '1-4',
+        key: '1-4',
+    }, {
+        label: 'Assault',
+        value: '1-5',
+        key: '1-5',
     }],
 },{
     label: 'VAWA Offenses',
-    value: '0-2',
-    key: '0-2',
+    value: '2',
+    key: '2',
     children: [{
         label: 'Domestic Violence',
-        value: '0-2-0',
-        key: '0-2-0',
+        value: '2-0',
+        key: '2-0',
     }, {
         label: 'Dating Violence',
-        value: '0-2-1',
-        key: '0-2-1',
+        value: '2-1',
+        key: '2-1',
     }, {
         label: 'Stalking',
-        value: '0-2-2',
-        key: '0-2-2',
+        value: '2-2',
+        key: '2-2',
     }],
 },{
     label: 'Arrests',
-    value: '0-3',
-    key: '0-3',
+    value: '3',
+    key: '3',
     children: [{
         label: 'Weapons',
-        value: '0-3-0',
-        key: '0-3-0',
+        value: '3-0',
+        key: '3-0',
     }, {
         label: 'Drug Abuse Violations',
-        value: '0-3-1',
-        key: '0-3-1',
+        value: '3-1',
+        key: '3-1',
     }, {
         label: 'Liquor Law Violations',
-        value: '0-3-2',
-        key: '0-3-2',
+        value: '3-2',
+        key: '3-2',
     }],
 }];
 
@@ -125,13 +124,13 @@ class App extends React.Component {
             searchText: '',
             filtered: false,
             treeValue: [],
-            loading:false
+            loading:false,
         };
     }
 
     componentWillMount() {
         this.setState({loading: true});
-        axios.get(`http://172.27.19.41:8081/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
+        axios.get(`http://172.26.75.27:8081/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data, loading: false});
@@ -142,18 +141,24 @@ class App extends React.Component {
     createFac(){
         var arrayLength = this.state.treeValue.length;
         encode = "";
+        var initial = this.state.treeValue[0].charAt(0);
         for (var i = 0; i < arrayLength; i++) {
-            encode += this.state.treeValue[i] + "_";
+            var curr = this.state.treeValue[i];
+            if(curr.charAt(0) != initial) {
+                encode += "_";
+                initial = curr.charAt(0);
+            }
+            encode += curr + "_";
         }
+        encode = encode.substring(0, encode.length - 1);
 
         this.setState({loading: true});
-        axios.get(`http://172.27.19.41:8081/api/v1/info/`+encode.slice(0, -1))
+        axios.get(`http://172.26.75.27:8081/api/v1/info/`+encode)
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data, loading: false});
                 searchData = res.data;
             });
-
     }
 
     onCollapse = (collapsed) => {
@@ -229,15 +234,22 @@ class App extends React.Component {
             title: 'Food',
             dataIndex: 'food',
             sorter: (a, b) => a.food - b.food,
+            render: (record) => (record == 0) ? "Unavailable" : record,
         }, {
             title: 'Rank',
             dataIndex: 'rank',
+            render: (record) => (record == 1500 || record == 900 || record == 700 || record == 550) ? "~"+record : record,
             sorter: (a, b) => a.rank - b.rank,
         }, {
             title: 'Total',
             dataIndex: 'total',
             sorter: (a, b) => a.total - b.total,
         }];
+        const pagination = {
+            pageSize:12,
+            showQuickJumper:true,
+            //showSizeChanger:true,
+        };
         const tProps = {
             treeData,
             value: this.state.treeValue,
@@ -252,7 +264,7 @@ class App extends React.Component {
 
         let show = null;
         if (!this.state.loading) {
-            show =  <div><h4>select crime factors: <TreeSelect {...tProps} /></h4><Table columns={columns} dataSource={this.state.data} onChange={onChange}/></div>;
+            show =  <div><h4>select crime factors: <TreeSelect {...tProps} /></h4><Table columns={columns} dataSource={this.state.data} pagination={pagination} onChange={onChange}/></div>;
         } else {
             show =  <div style={{paddingTop:50, textAlign: 'center'}}><Spin size="large" /></div>;
         }
