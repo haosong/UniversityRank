@@ -293,7 +293,7 @@ class university extends React.Component {
                                     <Table pagination={false}  columns={arrestscolumns} dataSource={this.state.Crime2015["arrests"]} />
                                     <br />
                                     <br />
-                                    <h4>2015 Arrests</h4>
+                                    <h4>2015 Vawa</h4>
                                     <Table pagination={false}  columns={vawacolumns} dataSource={this.state.Crime2015["vawa"]} />
                                     <br />
                                     <br />
@@ -366,11 +366,7 @@ const firecolumns = [{
   title: 'facility',
   dataIndex: 'facility',
   key: 'facility',
-}, {
-  title: 'fires',
-  dataIndex: 'fires',
-  key: 'fires',
-}, {
+},  {
   title: 'injuries',
   dataIndex: 'injuries',
   key: 'injuries',
