@@ -130,7 +130,7 @@ class App extends React.Component {
 
     componentWillMount() {
         this.setState({loading: true});
-        axios.get(`http://172.26.75.27:8080/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
+        axios.get(`http://api.shcloud.top:8080/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data, loading: false});
@@ -141,19 +141,20 @@ class App extends React.Component {
     createFac(){
         var arrayLength = this.state.treeValue.length;
         encode = "";
-        var initial = this.state.treeValue[0].charAt(0);
-        for (var i = 0; i < arrayLength; i++) {
-            var curr = this.state.treeValue[i];
-            if(curr.charAt(0) != initial) {
-                encode += "_";
-                initial = curr.charAt(0);
+        if(arrayLength != 0){
+            var initial = this.state.treeValue[0].charAt(0);
+            for (var i = 0; i < arrayLength; i++) {
+                var curr = this.state.treeValue[i];
+                if(curr.charAt(0) != initial) {
+                    encode += "_";
+                    initial = curr.charAt(0);
+                }
+                encode += curr + "_";
             }
-            encode += curr + "_";
+            encode = encode.substring(0, encode.length - 1);
         }
-        encode = encode.substring(0, encode.length - 1);
-
         this.setState({loading: true});
-        axios.get(`http://172.26.75.27:8080/api/v1/info/`+encode)
+        axios.get(`http://api.shcloud.top:8080/api/v1/info/`+encode)
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data, loading: false});
