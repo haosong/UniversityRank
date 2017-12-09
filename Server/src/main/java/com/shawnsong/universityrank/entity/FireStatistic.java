@@ -1,5 +1,7 @@
 package com.shawnsong.universityrank.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -15,6 +17,7 @@ public class FireStatistic {
     //@Id
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "name")
+    @JsonIgnore
     private University name;
     //@Id
     private String year;

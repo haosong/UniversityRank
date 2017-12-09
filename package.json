@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^2.13.9",
+    "antd": "^3.0.0",
     "axios": "^0.17.0",
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.0",

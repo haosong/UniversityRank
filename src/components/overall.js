@@ -130,7 +130,7 @@ class App extends React.Component {
 
     componentWillMount() {
         this.setState({loading: true});
-        axios.get(`http://172.26.75.27:8081/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
+        axios.get(`http://172.26.75.27:8080/api/v1/info`)  // `http://api.shcloud.top:8080/api/v1/info/`+this.state.value
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data, loading: false});
@@ -153,7 +153,7 @@ class App extends React.Component {
         encode = encode.substring(0, encode.length - 1);
 
         this.setState({loading: true});
-        axios.get(`http://172.26.75.27:8081/api/v1/info/`+encode)
+        axios.get(`http://172.26.75.27:8080/api/v1/info/`+encode)
             .then(res => {
                 console.log(res);
                 this.setState({data: res.data, loading: false});
