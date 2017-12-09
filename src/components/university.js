@@ -62,31 +62,39 @@ class university extends React.Component {
                 // alert(res.data["2015"]["crime"][0]["type"]);
                 // var a = res.data[2015]["crime"];
                 // console.log(a);
-                var tmp = this.state.Crime2015;
-                tmp["crime"] = res.data["2015"]["crime"];
-                tmp["hate"] = res.data["2015"]["hate"];
-                tmp["arrests"] = res.data["2015"]["arrests"];
-                tmp["vawa"] = res.data["2015"]["vawa"];
-                tmp["fire"] = res.data["2015"]["fire"];
-                this.setState({Crime2015 : tmp});
+                // var tmp = this.state.Crime2015;
+                var crime2015 = {};
+                crime2015["crime"] = res.data["2015"]["crime"];
+                crime2015["hate"] = res.data["2015"]["hate"];
+                crime2015["arrests"] = res.data["2015"]["arrests"];
+                crime2015["vawa"] = res.data["2015"]["vawa"];
+                crime2015["fire"] = res.data["2015"]["fire"];
+                this.setState({Crime2015 : crime2015});
+                console.log(crime2015);
                 
                 // tmp = this.state.Crime2014;
                 // alert(res.data[2014]["vawa"][0]["type"]);
-                tmp["crime"] = res.data["2014"]["crime"];
-                tmp["hate"] = res.data["2014"]["hate"];
-                tmp["arrests"] = res.data["2014"]["arrests"];
-                tmp["vawa"] = res.data["2014"]["vawa"];
-                tmp["fire"] = res.data["2014"]["fire"];
-                this.setState({Crime2014 : tmp});
+                var crime2014 = {};
+                crime2014["crime"] = res.data["2014"]["crime"];
+                crime2014["hate"] = res.data["2014"]["hate"];
+                crime2014["arrests"] = res.data["2014"]["arrests"];
+                crime2014["vawa"] = res.data["2014"]["vawa"];
+                crime2014["fire"] = res.data["2014"]["fire"];
+                this.setState({Crime2014 : crime2014});
+                console.log(crime2014);
                 // alert(tmp["vawa"][0]["type"]);
                 
                 // tmp = this.state.Crime2013;
-                tmp["crime"] = res.data["2013"]["crime"];
-                tmp["hate"] = res.data["2013"]["hate"];
-                tmp["arrests"] = res.data["2013"]["arrests"];
-                tmp["vawa"] = res.data["2013"]["vawa"];
-                tmp["fire"] = res.data["2013"]["fire"];
-                this.setState({Crime2013 : tmp});
+                var crime2013 = {};
+                crime2013["crime"] = res.data["2013"]["crime"];
+                crime2013["hate"] = res.data["2013"]["hate"];
+                crime2013["arrests"] = res.data["2013"]["arrests"];
+                crime2013["vawa"] = res.data["2013"]["vawa"];
+                crime2013["fire"] = res.data["2013"]["fire"];
+                this.setState({Crime2013 : crime2013});
+                console.log(crime2013);
+
+                
                 
                 
                 
