@@ -45,7 +45,7 @@ public class UniversityService {
         return l.size() == 0 ? null : l.get(0);
     }
 
-    public List<UniversityBrief> getUniversityOverallInfo(int[][] options) {
+    public List<UniversityBrief> getUniversityOverallInfo(int[][] options, boolean containsFire) {
         List<University> l = universityRepository.findAll();
         List<UniversityBrief> res = new ArrayList<>(l.size());
         Map<String, List<Arrests>> arrestsMap = arrestsRepository.findAll().stream().collect(Collectors.groupingBy(Arrests::getUniversityName));
@@ -83,8 +83,10 @@ public class UniversityService {
                 arrestSum += options[3][1] * a.getDrug_abuse_violation();
                 arrestSum += options[3][2] * a.getLiquor_law_violation();
             }
-            for (FireStatistic f : fireMap.getOrDefault(u.getName(), new ArrayList<>()))
-                fireSum += f.getDeaths() + f.getInjuries() + f.getFires();
+            if (containsFire) {
+                for (FireStatistic f : fireMap.getOrDefault(u.getName(), new ArrayList<>()))
+                    fireSum += f.getDeaths() + f.getInjuries() + f.getFires();
+            }
             ui.setId(u.getGeohash());
             ui.setName(u.getName());
             Float totalCrime = arrestSum + criminalSum + hateSum + vawaSum + fireSum;

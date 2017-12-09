@@ -119,7 +119,7 @@ public class UniversityController {
     public List<UniversityBrief> getInfo() {
         int[][] options = new int[4][6];
         for (int i = 0; i < 4; i++) options[i] = new int[]{1, 1, 1, 1, 1, 1};
-        return universityService.getUniversityOverallInfo(options);
+        return universityService.getUniversityOverallInfo(options, true);
     }
 
     @CrossOrigin
@@ -132,7 +132,7 @@ public class UniversityController {
             if (opt.length() == 1) weight[index] = new int[]{1, 1, 1, 1, 1, 1};
             else for (String sub : opt.split("_")) weight[index][Integer.parseInt(sub.charAt(2) + "")] = 1;
         }
-        return universityService.getUniversityOverallInfo(weight);
+        return universityService.getUniversityOverallInfo(weight, false);
     }
 
 }
