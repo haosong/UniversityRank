@@ -109,7 +109,7 @@ class university extends React.Component {
                 tmp["vawa"] = res.data["2014"]["vawa"];
                 tmp["fire"] = res.data["2014"]["fire"];
                 this.setState({Crime2014 : tmp});
-                alert(tmp["vawa"][0]["type"]);
+                // alert(tmp["vawa"][0]["type"]);
                 
                 // tmp = this.state.Crime2013;
                 tmp["crime"] = res.data["2013"]["crime"];
