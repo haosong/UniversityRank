@@ -1,8 +1,5 @@
 package com.shawnsong.universityrank.entity;
 
-/**
- * Created by shawn on 2017/12/3.
- */
 public class CrimeDetail {
     private CrimeEachYear year13;
     private CrimeEachYear year14;

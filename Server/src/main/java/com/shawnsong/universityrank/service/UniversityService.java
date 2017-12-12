@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by shawn on 2017/12/2.
- */
 @Service
 public class UniversityService {
     @Autowired

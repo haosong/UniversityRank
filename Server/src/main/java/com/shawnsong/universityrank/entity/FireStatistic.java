@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-/**
- * Created by shawn on 2017/11/20.
- */
 @Entity
 // @IdClass(FireStatisticId.class)
 public class FireStatistic {

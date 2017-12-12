@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-/**
- * Created by shawn on 2017/11/21.
- */
 public interface CriminalOffenseRepository extends JpaRepository<CriminalOffense, CrimeId> {
     List<CriminalOffense> findAllByName(University name);
 }

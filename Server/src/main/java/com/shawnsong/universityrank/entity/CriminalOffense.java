@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 
-/**
- * Created by shawn on 2017/11/20.
- */
 @Entity
 @IdClass(CrimeId.class)
 public class CriminalOffense {

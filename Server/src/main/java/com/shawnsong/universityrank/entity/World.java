@@ -5,10 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * Created by shawn on 2017/11/12.
- */
-
 @Entity
 @Table(name = "Test")
 public class World {

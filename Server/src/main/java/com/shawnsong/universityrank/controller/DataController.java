@@ -25,9 +25,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by shawn on 2017/12/2.
- */
 @RestController
 public class DataController {
 
@@ -74,7 +71,7 @@ public class DataController {
         Set<String> set = new HashSet<>();
         try {
             BufferedReader br;
-            br = new BufferedReader(new FileReader("C:\\Users\\shawn\\Desktop\\UniversityRank\\Server\\src\\main\\java\\com\\shawnsong\\universityrank\\controller\\university.csv"));
+            br = new BufferedReader(new FileReader("university.csv"));
             String line;
             while ((line = br.readLine()) != null) set.add(line);
             for (String s : set) {
@@ -117,33 +114,31 @@ public class DataController {
 
     @GetMapping(value = {"/InsertUniversityLatLon"})
     public String insertUniversityLatLon() {
-        /*
-        List<University> l = universityRepository.findAll();
-        String apiKey_1 = "AIzaSyAFQD1NoAz6moZgomYjIFh0Fu7qxZZ5K_Q";
-        String apiKey_2 = "AIzaSyA1fV_QEsutP58Yb-IfD_2vQXP16pgOgO0";
-        int index = 0;
-        int all = l.size();
-        for (University u : l) {
-            if (u.getLat() != null) continue;
-            String apiKey = (index++ % 2 == 0) ? apiKey_1 : apiKey_2;
-            GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
-            try {
-                GeocodingResult[] results = GeocodingApi.geocode(context, u.getName()).await();
-                if (results.length > 0) {
-                    LatLng latLng = results[0].geometry.location;
-                    u.setLat(latLng.lat);
-                    u.setLng(latLng.lng);
-                    u.setGeohash(GeoHashExtensions.encode(latLng.lat, latLng.lng));
-                    universityRepository.save(u);
-                    logger.info(index + "/" + all + ": " + u.getName() + " : " + u.getLat() + ", " + u.getLng());
-                } else {
-                    throw new InterruptedException();
-                }
-            } catch (ApiException | InterruptedException | IOException e) {
-                logger.info(index + "/" + all + ": Get GPS Of " + u.getName() + " Failed!");
-            }
-        }
-        */
+        // List<University> l = universityRepository.findAll();
+        // String apiKey_1 = "AIzaSyAFQD1NoAz6moZgomYjIFh0Fu7qxZZ5K_Q";
+        // String apiKey_2 = "AIzaSyA1fV_QEsutP58Yb-IfD_2vQXP16pgOgO0";
+        // int index = 0;
+        // int all = l.size();
+        // for (University u : l) {
+        //     if (u.getLat() != null) continue;
+        //     String apiKey = (index++ % 2 == 0) ? apiKey_1 : apiKey_2;
+        //     GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
+        //     try {
+        //         GeocodingResult[] results = GeocodingApi.geocode(context, u.getName()).await();
+        //         if (results.length > 0) {
+        //             LatLng latLng = results[0].geometry.location;
+        //             u.setLat(latLng.lat);
+        //             u.setLng(latLng.lng);
+        //             u.setGeohash(GeoHashExtensions.encode(latLng.lat, latLng.lng));
+        //             universityRepository.save(u);
+        //             logger.info(index + "/" + all + ": " + u.getName() + " : " + u.getLat() + ", " + u.getLng());
+        //         } else {
+        //             throw new InterruptedException();
+        //         }
+        //     } catch (ApiException | InterruptedException | IOException e) {
+        //         logger.info(index + "/" + all + ": Get GPS Of " + u.getName() + " Failed!");
+        //     }
+        // }
         return "";
     }
 }

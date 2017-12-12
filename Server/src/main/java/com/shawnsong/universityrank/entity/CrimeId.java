@@ -3,9 +3,6 @@ package com.shawnsong.universityrank.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by shawn on 2017/11/20.
- */
 @IdClass(CrimeId.class)
 public class CrimeId implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)

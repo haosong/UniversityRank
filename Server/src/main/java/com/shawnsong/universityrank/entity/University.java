@@ -3,9 +3,6 @@ package com.shawnsong.universityrank.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-/**
- * Created by shawn on 2017/11/20.
- */
 @Entity
 public class University {
     @Id

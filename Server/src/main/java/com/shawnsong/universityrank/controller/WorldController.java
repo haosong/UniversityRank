@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-/**
- * Created by shawn on 2017/11/12.
- */
 @RestController
 public class WorldController {
 

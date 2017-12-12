@@ -1,8 +1,5 @@
 package com.shawnsong.universityrank.entity;
 
-/**
- * Created by shawn on 2017/11/27.
- */
 public class UniversityDetail {
     private String name;
     private String address;

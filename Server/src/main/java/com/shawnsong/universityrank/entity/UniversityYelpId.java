@@ -6,9 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-/**
- * Created by shawn on 2017/12/1.
- */
 @IdClass(UniversityYelpId.class)
 public class UniversityYelpId implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)

@@ -6,9 +6,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 
-/**
- * Created by shawn on 2017/11/20.
- */
 @IdClass(FireStatisticId.class)
 public class FireStatisticId implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)

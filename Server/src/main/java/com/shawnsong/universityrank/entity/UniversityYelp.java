@@ -2,9 +2,6 @@ package com.shawnsong.universityrank.entity;
 
 import javax.persistence.*;
 
-/**
- * Created by shawn on 2017/12/1.
- */
 @Entity
 @IdClass(UniversityYelpId.class)
 public class UniversityYelp {

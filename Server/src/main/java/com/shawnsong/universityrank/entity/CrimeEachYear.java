@@ -2,9 +2,6 @@ package com.shawnsong.universityrank.entity;
 
 import java.util.List;
 
-/**
- * Created by shawn on 2017/12/3.
- */
 public class CrimeEachYear {
     private String year;
     private List<CriminalOffense> crime;

@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by shawn on 2017/11/26.
- */
 @RestController
 public class UniversityController {
 

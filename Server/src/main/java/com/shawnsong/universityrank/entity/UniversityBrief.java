@@ -1,11 +1,6 @@
 package com.shawnsong.universityrank.entity;
 
-/**
- * Created by shawn on 2017/11/27.
- */
 public class UniversityBrief {
-    // obj.add(jp.parseList("[{id: \"1\",name: \"Harvard University\",crime: 32,food: 20,rank: 97,total: 101}]").get(0));
-
     private String id; // geohash
     private String name;
     private Float crime;

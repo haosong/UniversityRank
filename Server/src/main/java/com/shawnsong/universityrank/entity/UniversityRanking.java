@@ -1,8 +1,5 @@
 package com.shawnsong.universityrank.entity;
 
-/**
- * Created by shawn on 2017/12/2.
- */
 public class UniversityRanking {
     private String overallScore;
     private String resourceScore;
